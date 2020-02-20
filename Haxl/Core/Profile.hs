@@ -148,7 +148,7 @@ incrementMemoHitCounter pd = pd { profileMemoHits = succ (profileMemoHits pd) }
 
 {-# NOINLINE addProfileFetch #-}
 addProfileFetch
-  :: forall r u w a . (DataSourceName r, Eq (r a), Hashable (r a), Typeable (r a))
+  :: forall r u w a . (DataSourceName r, Eq (r a), Hashable (r a)) -- , Typeable (r a))
   => Env u w -> r a -> IO ()
 addProfileFetch env _req = do
   c <- getAllocationCounter

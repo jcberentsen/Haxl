@@ -704,11 +704,12 @@ instance Monad (GenHaxl u w) where
       Throw e -> return (Throw e)
       Blocked ivar cont -> trace_ ">>= Blocked" $
         return (Blocked ivar (cont :>>= k))
-  fail msg = GenHaxl $ \_env ->
-    return $ Throw $ toException $ MonadFail $ Text.pack msg
-
   -- We really want the Applicative version of >>
   (>>) = (*>)
+
+instance MonadFail (GenHaxl u w) where
+  fail msg = GenHaxl $ \_env ->
+    return $ Throw $ toException $ MonadFailure $ Text.pack msg
 
 instance Functor (GenHaxl u w) where
   fmap f (GenHaxl m) = GenHaxl $ \env -> do

@@ -60,7 +60,7 @@ module Haxl.Core.Exception (
   EmptyList(..),
   JSONError(..),
   InvalidParameter(..),
-  MonadFail(..),
+  MonadFailure(..),
 
   -- ** Transient exceptions
   FetchError(..),
@@ -297,10 +297,10 @@ instance Exception InvalidParameter where
   -- TODO: should be a child of LogicBug
 
 -- | Generic \"fail was called\" exception.
-newtype MonadFail = MonadFail Text
+newtype MonadFailure = MonadFailure Text
   deriving (Typeable, Eq, Show)
 
-instance Exception MonadFail where
+instance Exception MonadFailure where
   toException = logicErrorToException
   fromException = logicErrorFromException
 
